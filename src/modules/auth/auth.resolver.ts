@@ -1,12 +1,12 @@
-import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { AuthService } from '@/graphql/auth/auth.service';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { AuthService } from '@/modules/auth/auth.service';
 import { AuthModel } from '@/types/models/auth.model';
 import { ServerID } from '@/common/decorators/server.decorator';
 import { I18n, I18nContext } from 'nestjs-i18n';
 import { I18nTranslations } from '@/types/generated/i18n.generated';
-import { UserModel } from "@/types/models/user.model";
-import { UserPwResetInputModel } from "@/types/models/inputs/user_pw_reset.input";
-import { UserInputModel } from "@/types/models/inputs/user.input";
+import { UserModel } from '@/types/models/user.model';
+import { UserPwResetInputModel } from '@/types/models/inputs/user_pw_reset.input';
+import { UserInputModel } from '@/types/models/inputs/user.input';
 
 @Resolver(() => AuthModel)
 export class AuthResolver {
@@ -19,7 +19,10 @@ export class AuthResolver {
     @ServerID() server_id: number,
     @I18n() i18n: I18nContext<I18nTranslations>,
   ): Promise<AuthModel> {
-    return await this.authService.sign_in(username, password, { server_id, i18n });
+    return await this.authService.sign_in(username, password, {
+      server_id,
+      i18n,
+    });
   }
 
   @Mutation(() => UserModel, { name: 'auth_register' })
@@ -28,7 +31,10 @@ export class AuthResolver {
     @ServerID() server_id: number,
     @I18n() i18n: I18nContext<I18nTranslations>,
   ): Promise<UserModel | null> {
-    return await this.authService.register(user_input_data, { server_id, i18n })
+    return await this.authService.register(user_input_data, {
+      server_id,
+      i18n,
+    });
   }
 
   @Mutation(() => UserModel, { name: 'auth_verify' })
@@ -42,22 +48,30 @@ export class AuthResolver {
 
   @Mutation(() => UserModel, { name: 'auth_user_pw_reset' })
   async user_pw_reset(
-    @Args('user_pw_reset_input_data') pw_reset_input_data: UserPwResetInputModel,
+    @Args('user_pw_reset_input_data')
+    pw_reset_input_data: UserPwResetInputModel,
     @ServerID() server_id: number,
     @I18n() i18n: I18nContext<I18nTranslations>,
   ): Promise<UserModel | null> {
-    return this.authService.reset_password(pw_reset_input_data, { server_id, i18n })
+    return this.authService.reset_password(pw_reset_input_data, {
+      server_id,
+      i18n,
+    });
   }
 
   @Mutation(() => Boolean, {
     name: 'auth_user_pw_reset_request',
-    description: 'Request a password reset for a user. A new challenge will sent to the user\'s email. Returns true if the request was successful.',
+    description:
+      "Request a password reset for a user. A new challenge will sent to the user's email. Returns true if the request was successful.",
   })
   async user_pw_reset_request(
     @ServerID() server_id: number,
     @I18n() i18n: I18nContext<I18nTranslations>,
     @Args('username') username: string,
   ): Promise<boolean> {
-    return this.authService.reset_password_request(username, { server_id, i18n });
+    return this.authService.reset_password_request(username, {
+      server_id,
+      i18n,
+    });
   }
 }

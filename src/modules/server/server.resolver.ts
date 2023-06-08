@@ -1,5 +1,5 @@
 import { Query, Resolver } from '@nestjs/graphql';
-import { ServerService } from '@/graphql/server/server.service';
+import { ServerService } from '@/modules/server/server.service';
 import { ServerModel } from '@/types/models/server.model';
 import { ServerID } from '@/common/decorators/server.decorator';
 import { I18n, I18nContext } from 'nestjs-i18n';

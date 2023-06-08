@@ -1,20 +1,13 @@
-import {
-  Args,
-  Mutation,
-  Query,
-  Resolver
-} from "@nestjs/graphql";
-import { UserService } from '@/graphql/user/user.service';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { UserService } from '@/modules/user/user.service';
 import { ServerID } from '@/common/decorators/server.decorator';
 import { I18n, I18nContext } from 'nestjs-i18n';
 import { I18nTranslations } from '@/types/generated/i18n.generated';
-import { UserModel } from "@/types/models/user.model";
-import { UseGuards } from "@nestjs/common";
-import { AuthGuard } from "@/graphql/auth/auth.guard";
-import { UserID } from "@/common/decorators/user.decorator";
-import { UserUpdateInputModel } from "@/types/models/inputs/user_update.input";
-import { UserPwResetInputModel } from "@/types/models/inputs/user_pw_reset.input";
-
+import { UserModel } from '@/types/models/user.model';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@/modules/auth/auth.guard';
+import { UserID } from '@/common/decorators/user.decorator';
+import { UserUpdateInputModel } from '@/types/models/inputs/user_update.input';
 @Resolver(() => UserModel)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
@@ -28,7 +21,7 @@ export class UserResolver {
     @I18n() i18n: I18nContext<I18nTranslations>,
     @UserID() user_id: number,
   ): Promise<UserModel | null> {
-    return this.userService.find_by_id({ server_id, i18n, user_id })
+    return this.userService.find_by_id({ server_id, i18n, user_id });
   }
 
   @UseGuards(AuthGuard)
@@ -37,9 +30,17 @@ export class UserResolver {
     @ServerID() server_id: number,
     @I18n() i18n: I18nContext<I18nTranslations>,
     @UserID() user_id: number,
-    @Args({ name: 'user_update_input_data', type: () => UserUpdateInputModel }) user_update_input_data: UserUpdateInputModel,
+    @Args({
+      name: 'user_update_input_data',
+      type: () => UserUpdateInputModel,
+    })
+    user_update_input_data: UserUpdateInputModel,
   ): Promise<UserModel | null> {
-    return this.userService.update(user_update_input_data, { server_id, i18n, user_id })
+    return this.userService.update(user_update_input_data, {
+      server_id,
+      i18n,
+      user_id,
+    });
   }
 
   @UseGuards(AuthGuard)
@@ -49,6 +50,6 @@ export class UserResolver {
     @I18n() i18n: I18nContext<I18nTranslations>,
     @UserID() user_id: number,
   ): Promise<UserModel | null> {
-    return this.userService.delete({ server_id, i18n, user_id })
+    return this.userService.delete({ server_id, i18n, user_id });
   }
 }

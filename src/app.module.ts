@@ -1,22 +1,19 @@
-import { ContextType, Module } from "@nestjs/common";
-import { ServeStaticModule } from "@nestjs/serve-static";
-import { ConfigModule } from "@nestjs/config";
-import { I18nJsonLoader, I18nModule } from "nestjs-i18n";
-import { GraphQLModule } from "@nestjs/graphql";
-import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
-import { join } from "path";
+import { ContextType, DynamicModule, Module } from '@nestjs/common';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { ConfigModule } from '@nestjs/config';
+import { I18nJsonLoader, I18nModule } from 'nestjs-i18n';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
 
-import { config_validation_schema } from "@/common/validation/config.validation";
-import { I18nLangResolver } from "@/common/middleware/i18n.resolver";
-import { AuthModule } from "@/graphql/auth/auth.module";
-import { ServerModule } from "@/graphql/server/server.module";
-import { UserModule } from "@/graphql/user/user.module";
+import { config_validation_schema } from '@/common/validation/config.validation';
+import { I18nLangResolver } from '@/common/middleware/i18n.resolver';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      validationSchema: config_validation_schema
+      validationSchema: config_validation_schema,
     }),
     I18nModule.forRoot({
       fallbackLanguage: 'en',
@@ -52,11 +49,12 @@ import { UserModule } from "@/graphql/user/user.module";
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client', 'dist'),
     }),
-    AuthModule,
-    ServerModule,
-    UserModule
   ],
-  controllers: [],
-  providers: [],
 })
-export class AppModule {}
+export class WebStackAppModule {
+  static forRoot(entities = [], options?: any): DynamicModule {
+    return {
+      module: this,
+    };
+  }
+}

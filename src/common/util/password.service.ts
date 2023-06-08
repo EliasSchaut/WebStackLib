@@ -1,10 +1,9 @@
-import { Injectable } from "@nestjs/common";
-import cuid from "cuid";
+import { Injectable } from '@nestjs/common';
+import cuid from 'cuid';
 const bcrypt = require('bcrypt');
 
 @Injectable()
 export class PasswordService {
-
   async hash(password: string): Promise<string> {
     return bcrypt.hash(password, 10);
   }

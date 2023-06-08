@@ -21,8 +21,7 @@
     "esModuleInterop": true,
 
     "paths": {
-      "@/*": ["./src/*"],
-      "@/test/*": ["./test/*"]
+      "@/*": ["./src/*"]
     }
   }
 }

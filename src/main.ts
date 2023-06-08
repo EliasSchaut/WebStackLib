@@ -1,25 +1,41 @@
-import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
-import { AppModule } from '@/app.module';
-import helmet from 'helmet';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
+import helmet, { HelmetOptions } from 'helmet';
+import { Logger } from '@nestjs/common';
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix('api');
-  app.use(helmet({
-    contentSecurityPolicy: {
-        directives: {
-          imgSrc: ["'self'", "data:", "https://www.gravatar.com", "https://validator.swagger.io"],
-          styleSrc: [`'self'`, `'unsafe-inline'`],
-          scriptSrc: ["'self'", "https: 'unsafe-inline'", "'unsafe-eval'"],
-          objectSrc: ["'self'"],
-          defaultSrc: [`'self'`],
+export async function webstack_bootstrap(
+  app: INestApplication,
+  options?: {
+    port: number;
+    helmet: HelmetOptions;
+    logger: Logger;
+    global_client_prefix: string;
+  },
+) {
+  const logger = options?.logger ?? new Logger('Bootstrap');
+  app.setGlobalPrefix(options?.global_client_prefix ?? 'api');
+  app.use(
+    helmet(
+      options?.helmet ?? {
+        contentSecurityPolicy: {
+          directives: {
+            imgSrc: ["'self'", 'data:', 'https://cdn.jsdelivr.net'],
+            styleSrc: [
+              `'self'`,
+              'data:',
+              `'unsafe-inline'`,
+              'https://cdn.jsdelivr.net',
+            ],
+            scriptSrc: ["'self'", "https: 'unsafe-inline'", "'unsafe-eval'"],
+            objectSrc: ["'self'"],
+            defaultSrc: [`'self'`],
+          },
         },
-    },
-    crossOriginEmbedderPolicy: false
-  }));
+        crossOriginEmbedderPolicy: false,
+      },
+    ),
+  );
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(process.env.PORT as string);
-  console.log(`Application is running on: ${await app.getUrl()}`);
+  app.useLogger(logger);
+  await app.listen(options?.port ?? 3000);
+  logger.verbose(`Application is running on: ${await app.getUrl()}`);
 }
-bootstrap().then();
