@@ -1,10 +1,10 @@
 import { registerDecorator, ValidationOptions } from 'class-validator';
-import { name_pattern } from '@/common/validation/patterns/name.pattern';
+import { CronPattern } from '@/common/validation/patterns/cron.pattern';
 
-export function IsName(validationOptions?: ValidationOptions) {
+export function IsCron(validationOptions?: ValidationOptions) {
   return function (object: any, propertyName: string) {
     registerDecorator({
-      name: 'IsName',
+      name: 'IsCron',
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
@@ -12,7 +12,7 @@ export function IsName(validationOptions?: ValidationOptions) {
         validate(value: any) {
           return (
             typeof value === 'undefined' ||
-            (typeof value === 'string' && name_pattern.test(value))
+            (typeof value === 'string' && CronPattern.test(value))
           );
         },
       },

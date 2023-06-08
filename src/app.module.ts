@@ -6,14 +6,15 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 
-import { config_validation_schema } from '@/common/validation/config.validation';
+import { EnvValidationSchema } from '@/common/validation/env.validation';
 import { I18nLangResolver } from '@/common/middleware/i18n.resolver';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      validationSchema: config_validation_schema,
+      validationSchema: EnvValidationSchema,
+      ignoreEnvFile: true,
     }),
     I18nModule.forRoot({
       fallbackLanguage: 'en',

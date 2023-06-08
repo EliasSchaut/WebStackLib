@@ -1,5 +1,5 @@
 import { registerDecorator, ValidationOptions } from 'class-validator';
-import { password_pattern } from '@/common/validation/patterns/password.pattern';
+import { PasswordPattern } from '@/common/validation/patterns/password.pattern';
 
 export function IsPassword(validationOptions?: ValidationOptions) {
   return function (object: any, propertyName: string) {
@@ -12,7 +12,7 @@ export function IsPassword(validationOptions?: ValidationOptions) {
         validate(value: any) {
           return (
             typeof value === 'undefined' ||
-            (typeof value === 'string' && password_pattern.test(value))
+            (typeof value === 'string' && PasswordPattern.test(value))
           );
         },
       },
