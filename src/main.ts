@@ -5,10 +5,10 @@ import { Logger } from '@nestjs/common';
 export async function webstack_bootstrap(
   app: INestApplication,
   options?: {
-    port: number;
-    helmet: HelmetOptions;
-    logger: Logger;
-    global_client_prefix: string;
+    port?: number;
+    helmet?: HelmetOptions;
+    logger?: Logger;
+    global_client_prefix?: string;
   },
 ) {
   const logger = options?.logger ?? new Logger('Bootstrap');
