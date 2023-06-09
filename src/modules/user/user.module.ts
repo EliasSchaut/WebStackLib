@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { PrismaService } from '@/common/db/prisma.service';
-import { UserService } from '@/modules/user/user.service';
-import { UserResolver } from '@/modules/user/user.resolver';
+import { PrismaService } from '../../common';
+import { UserService } from './user.service';
+import { UserResolver } from './user.resolver';
 import { JwtService } from '@nestjs/jwt';
-import { PasswordService } from '@/common/util/password.service';
+import { PasswordService } from '../../common';
 
 @Module({
   providers: [

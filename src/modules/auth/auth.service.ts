@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@/common/db/prisma.service';
+import { PrismaService } from '../../common';
 import { JwtService } from '@nestjs/jwt';
-import { AuthModel } from '@/types/models/auth.model';
-import { CtxType } from '@/types/common/ctx.type';
+import { AuthModel } from '../../types';
+import { CtxType } from '../../types';
 import { GraphQLError } from 'graphql/error';
-import { PasswordService } from '@/common/util/password.service';
-import { UserPwResetInputModel } from '@/types/models/inputs/user_pw_reset.input';
-import { UserModel } from '@/types/models/user.model';
-import { EmailService } from '@/common/util/email.service';
-import { UserInputModel } from '@/types/models/inputs/user.input';
+import { PasswordService } from '../../common';
+import { UserPwResetInputModel } from '../../types';
+import { UserModel } from '../../types';
+import { EmailService } from '../../common';
+import { UserInputModel } from '../../types';
 
 @Injectable()
 export class AuthService {

@@ -1,9 +1,9 @@
 import { Query, Resolver } from '@nestjs/graphql';
-import { ServerService } from '@/modules/server/server.service';
-import { ServerModel } from '@/types/models/server.model';
-import { ServerID } from '@/common/decorators/server.decorator';
+import { ServerService } from './server.service';
+import { ServerModel } from '../../types';
+import { ServerID } from '../../common';
 import { I18n, I18nContext } from 'nestjs-i18n';
-import { I18nTranslations } from '@/types/generated/i18n.generated';
+import { I18nTranslations } from '../../types/generated/i18n.generated';
 
 @Resolver(() => ServerModel)
 export class ServerResolver {

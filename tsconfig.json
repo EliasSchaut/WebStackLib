@@ -19,10 +19,5 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
-
-    "paths": {
-      "@/*": ["./src/*"],
-      "@/prisma/*": ["./prisma/*"],
-    }
   }
 }

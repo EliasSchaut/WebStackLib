@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsPassword } from '@/common/validation/IsPassword.validation';
+import { IsPassword } from '../../../common';
 
 @InputType()
 export class UserPwResetInputModel {

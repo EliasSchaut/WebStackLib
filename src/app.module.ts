@@ -6,8 +6,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 
-import { EnvValidationSchema } from '@/common/validation/env.validation';
-import { I18nLangResolver } from '@/common/middleware/i18n.resolver';
+import { EnvValidationSchema } from './common/validation/env.validation';
+import { I18nLangResolver } from './common';
 
 @Module({})
 export class WebStackAppModule {

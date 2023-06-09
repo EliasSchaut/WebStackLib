@@ -1,12 +1,12 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { AuthService } from '@/modules/auth/auth.service';
-import { AuthModel } from '@/types/models/auth.model';
-import { ServerID } from '@/common/decorators/server.decorator';
+import { AuthService } from './auth.service';
 import { I18n, I18nContext } from 'nestjs-i18n';
-import { I18nTranslations } from '@/types/generated/i18n.generated';
-import { UserModel } from '@/types/models/user.model';
-import { UserPwResetInputModel } from '@/types/models/inputs/user_pw_reset.input';
-import { UserInputModel } from '@/types/models/inputs/user.input';
+import { AuthModel } from '../../types';
+import { ServerID } from '../../common';
+import { I18nTranslations } from '../../types/generated/i18n.generated';
+import { UserModel } from '../../types';
+import { UserPwResetInputModel } from '../../types';
+import { UserInputModel } from '../../types';
 
 @Resolver(() => AuthModel)
 export class AuthResolver {

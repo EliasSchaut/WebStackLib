@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@/common/db/prisma.service';
-import { CtxType } from '@/types/common/ctx.type';
+import { PrismaService } from '../../common';
+import { CtxType } from '../../types';
 
 @Injectable()
 export class ServerService {

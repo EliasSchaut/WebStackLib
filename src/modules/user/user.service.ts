@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@/common/db/prisma.service';
-import { CtxType } from '@/types/common/ctx.type';
-import { UserModel } from '@/types/models/user.model';
-import { UserUpdateInputModel } from '@/types/models/inputs/user_update.input';
-import { PasswordService } from '@/common/util/password.service';
+import { PrismaService } from '../../common';
+import { CtxType } from '../../types';
+import { UserModel } from '../../types';
+import { UserUpdateInputModel } from '../../types';
+import { PasswordService } from '../../common';
 
 @Injectable()
 export class UserService {

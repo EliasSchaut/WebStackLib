@@ -1,7 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { IsEmail } from 'class-validator';
-import { IsPassword } from '@/common/validation/IsPassword.validation';
-import { IsName } from '@/common/validation/IsName.validation';
+import { IsPassword } from '../../../common';
+import { IsName } from '../../../common';
 
 @InputType()
 export class UserInputModel {

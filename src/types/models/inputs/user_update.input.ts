@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsName } from '@/common/validation/IsName.validation';
+import { IsName } from '../../../common';
 
 @InputType()
 export class UserUpdateInputModel {
