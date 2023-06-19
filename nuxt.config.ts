@@ -24,6 +24,7 @@ export default async () => {
       '@nuxtjs/color-mode',
       'dayjs-nuxt',
       '@pinia/nuxt',
+      '@pinia-plugin-persistedstate/nuxt',
     ],
     serverHandlers: is_dev ? [] : [{ route: '/', handler: await bootstrap() }],
 
@@ -91,6 +92,12 @@ export default async () => {
 
     pinia: {
       autoImports: ['defineStore'],
+    },
+
+    piniaPersistedstate: {
+      cookieOptions: {
+        maxAge: 60 * 60 * 24 * 30,
+      },
     },
   });
 };

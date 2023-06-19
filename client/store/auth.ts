@@ -18,6 +18,7 @@ export const authStore = defineStore('auth', {
       this.token = '';
     },
   },
+  persist: true,
 });
 
 class AuthType {
