@@ -145,9 +145,17 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { authStore } from '@/store/auth';
+import { alertStore } from '@/store/alert';
 
 export default defineComponent({
   name: 'index',
+  setup() {
+    return {
+      auth: authStore(),
+      alert: alertStore(),
+    };
+  },
   methods: {
     submit_login(e: Event) {
       const form = e.target as HTMLFormElement;
@@ -157,6 +165,7 @@ export default defineComponent({
         query login($email: String!, $password: String!) {
           auth_sign_in(username: $email, password: $password) {
             barrier_token
+            is_admin
           }
         }
       `;
@@ -167,6 +176,15 @@ export default defineComponent({
       });
 
       console.log(result.value);
+
+      if (result.value) {
+        this.auth.login(
+          result.value.auth_sign_in.barrier_token,
+          result.value.auth_sign_in.is_admin,
+        );
+      } else {
+        this.alert.show('Invalid credentials', 'warning');
+      }
     },
   },
 });

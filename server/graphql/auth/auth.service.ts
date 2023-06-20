@@ -26,7 +26,7 @@ export class AuthService {
     ctx: CtxType,
   ): Promise<AuthModel> {
     const user = await this.prisma.user.findUnique({
-      select: { id: true, password: true, verified: true },
+      select: { id: true, password: true, verified: true, is_admin: true },
       where: { username: username },
     });
 
@@ -52,6 +52,7 @@ export class AuthService {
     const payload = { username: user.id, sub: null };
     return {
       barrier_token: await this.jwtService.signAsync(payload),
+      is_admin: user.is_admin,
     };
   }
 
