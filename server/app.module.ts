@@ -1,5 +1,4 @@
 import { ContextType, Module } from '@nestjs/common';
-import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule } from '@nestjs/config';
 import { I18nJsonLoader, I18nModule } from 'nestjs-i18n';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -21,15 +20,13 @@ import { UserModule } from '@/graphql/user/user.module';
     I18nModule.forRoot({
       fallbackLanguage: 'en',
       loaderOptions: {
-        path: join(__dirname, '..', 'server', 'locales'),
+        path: join(__dirname, 'locales'),
         watch: true,
       },
       loader: I18nJsonLoader,
       resolvers: [I18nLangResolver],
       typesOutputPath: join(
         __dirname,
-        '..',
-        'server',
         'types',
         'generated',
         'i18n.generated.ts',
@@ -41,14 +38,7 @@ import { UserModule } from '@/graphql/user/user.module';
         'graphql-ws': true,
       },
       context: (ctx: ContextType) => ctx,
-      autoSchemaFile: join(
-        __dirname,
-        '..',
-        'server',
-        'types',
-        'generated',
-        'schema.gql',
-      ),
+      autoSchemaFile: join(__dirname, 'types', 'generated', 'schema.gql'),
     }),
     AuthModule,
     ServerModule,

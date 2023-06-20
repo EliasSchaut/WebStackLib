@@ -17,7 +17,7 @@
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
       <div class="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-        <form class="space-y-6" action="#" method="POST">
+        <form class="space-y-6" @submit.prevent="submit_login">
           <div>
             <label
               for="email"
@@ -148,6 +148,27 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'index',
+  methods: {
+    submit_login(e: Event) {
+      const form = e.target as HTMLFormElement;
+      const formData = new FormData(form);
+
+      const query = gql`
+        query login($email: String!, $password: String!) {
+          auth_sign_in(username: $email, password: $password) {
+            barrier_token
+          }
+        }
+      `;
+
+      const { result } = useQuery(query, {
+        email: formData.get('email'),
+        password: formData.get('password'),
+      });
+
+      console.log(result.value);
+    },
+  },
 });
 </script>
 

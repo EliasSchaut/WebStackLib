@@ -1,12 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-import bootstrap from './.nest/nest.js';
+import get_http_adapter_instance from './.nest/nest.js';
 const is_dev = process.env.NODE_ENV === 'development';
 const frontend_url = `${process.env.PROTOCOL}://${process.env.HOST}:${process.env.PORT}/`;
 const backend_url = is_dev
   ? `${process.env.PROTOCOL}://${process.env.HOST}:${
       Number(process.env.PORT) + 1
-    }`
+    }/`
   : `${frontend_url}`;
 
 export default async () => {
@@ -26,9 +26,16 @@ export default async () => {
       '@pinia/nuxt',
       '@pinia-plugin-persistedstate/nuxt',
     ],
-    serverHandlers: is_dev ? [] : [{ route: '/', handler: await bootstrap() }],
+    serverHandlers: is_dev
+      ? []
+      : [{ route: '/', handler: await get_http_adapter_instance() }],
 
     apollo: {
+      autoImports: true,
+      authType: 'Bearer',
+      authHeader: 'Authorization',
+      tokenStorage: 'cookie',
+      proxyCookies: true,
       clients: {
         default: {
           httpEndpoint: `${backend_url}graphql`,
