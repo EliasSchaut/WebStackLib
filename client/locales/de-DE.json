@@ -1,3 +1,17 @@
 {
-  "text": "Hello, world!"
+  "common": {
+    "err": {
+      "404": {
+        "title": "Seite nicht gefunden",
+        "desc": "Die von Ihnen gesuchte Seite ist nicht vorhanden."
+      },
+      "501": {
+        "title": "Nicht implementiert",
+        "desc": "Entschuldigung, diese Funktion ist noch nicht implementiert."
+      }
+    }
+  },
+  "nav": {
+    "go_home": "Zurück zur Startseite"
+  }
 }

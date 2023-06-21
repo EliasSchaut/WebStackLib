@@ -22,59 +22,59 @@
             <label
               for="email"
               class="block text-sm font-medium leading-6 text-gray-900"
-              >Email address</label
+              >E-Mail address</label
             >
-            <div class="mt-2">
+            <div class="relative mt-2 rounded-md shadow-sm">
+              <div
+                class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+              >
+                <EnvelopeIcon
+                  class="h-5 w-5 text-gray-400"
+                  aria-hidden="true"
+                />
+              </div>
               <input
                 id="email"
                 name="email"
                 type="email"
                 autocomplete="email"
-                required=""
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                required
+                class="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                placeholder="you@example.com"
               />
             </div>
           </div>
 
           <div>
-            <label
-              for="password"
-              class="block text-sm font-medium leading-6 text-gray-900"
-              >Password</label
-            >
-            <div class="mt-2">
+            <div class="flex items-center justify-between">
+              <label
+                for="password"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Password</label
+              >
+              <div class="text-sm">
+                <a
+                  href="#"
+                  class="font-semibold text-indigo-600 hover:text-indigo-500"
+                  >Forgot password?</a
+                >
+              </div>
+            </div>
+            <div class="relative mt-2 rounded-md shadow-sm">
+              <div
+                class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+              >
+                <KeyIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+              </div>
               <input
                 id="password"
                 name="password"
                 type="password"
                 autocomplete="current-password"
                 required=""
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                class="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                placeholder="•••"
               />
-            </div>
-          </div>
-
-          <div class="flex items-center justify-between">
-            <div class="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-              />
-              <label
-                for="remember-me"
-                class="ml-3 block text-sm leading-6 text-gray-900"
-                >Remember me</label
-              >
-            </div>
-
-            <div class="text-sm leading-6">
-              <a
-                href="#"
-                class="font-semibold text-indigo-600 hover:text-indigo-500"
-                >Forgot password?</a
-              >
             </div>
           </div>
 
@@ -103,19 +103,19 @@
           <div class="mt-6 grid grid-cols-2 gap-4">
             <a
               href="#"
-              class="flex w-full items-center justify-center gap-3 rounded-md bg-[#1D9BF0] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
+              class="flex w-full items-center justify-center gap-3 rounded-md bg-[#4285F4] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
             >
               <svg
                 class="h-5 w-5"
                 aria-hidden="true"
                 fill="currentColor"
-                viewBox="0 0 20 20"
+                viewBox="0 0 16 16"
               >
                 <path
-                  d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84"
+                  d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"
                 />
               </svg>
-              <span class="text-sm font-semibold leading-6">Twitter</span>
+              <span class="text-sm font-semibold leading-6">Google</span>
             </a>
 
             <a
@@ -139,17 +139,31 @@
           </div>
         </div>
       </div>
+
+      <p class="mt-10 text-center text-sm text-gray-500">
+        No account?
+        <NuxtLink
+          to="sign_up"
+          class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+          >Sign Up Now</NuxtLink
+        >
+      </p>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { EnvelopeIcon, KeyIcon } from '@heroicons/vue/20/solid';
 import { defineComponent } from 'vue';
 import { authStore } from '@/store/auth';
 import { alertStore } from '@/store/alert';
 
 export default defineComponent({
   name: 'index',
+  components: {
+    EnvelopeIcon,
+    KeyIcon,
+  },
   setup() {
     return {
       auth: authStore(),
