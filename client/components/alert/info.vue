@@ -17,7 +17,7 @@
             type="button"
             class="inline-flex rounded-md bg-blue-50 p-1.5 text-blue-500 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-blue-50"
           >
-            <span class="sr-only">Dismiss</span>
+            <span class="sr-only">{{ $t('common.sr.dismiss') }}</span>
             <XMarkIcon class="h-5 w-5" aria-hidden="true" />
           </button>
         </div>

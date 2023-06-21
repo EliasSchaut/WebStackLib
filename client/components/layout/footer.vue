@@ -1,18 +1,21 @@
 <template>
-  <footer class="bg-white">
-    <button @click="auth.logged_in = !auth.logged_in">
-      logged_in: {{ auth.logged_in }}
-    </button>
-    <p>theme: {{ $colorMode.value }}</p>
+  <footer class="bg-white dark:bg-gray-800">
+    <!-- debug -->
+    <div class="text-gray-500 dark:text-gray-300">
+      <button @click="auth.logged_in = !auth.logged_in">
+        logged_in: {{ auth.logged_in }}
+      </button>
+    </div>
+
     <div class="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
       <nav
         class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12"
-        aria-label="Footer"
+        :aria-label="$t('footer.title')"
       >
         <div v-for="item in navigation.main" :key="item.name" class="pb-6">
           <a
             :href="item.href"
-            class="text-sm leading-6 text-gray-600 hover:text-gray-900"
+            class="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-400"
             >{{ item.name }}</a
           >
         </div>
@@ -22,14 +25,16 @@
           v-for="item in navigation.social"
           :key="item.name"
           :href="item.href"
-          class="text-gray-400 hover:text-gray-500"
+          class="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400"
           target="_blank"
         >
           <span class="sr-only">{{ item.name }}</span>
           <component :is="item.icon" class="h-6 w-6" aria-hidden="true" />
         </a>
       </div>
-      <p class="mt-10 text-center text-xs leading-5 text-gray-500">
+      <p
+        class="mt-10 text-center text-xs leading-5 text-gray-500 dark:text-gray-300"
+      >
         &copy; 2023 Elias Lorenz Schaut
       </p>
     </div>

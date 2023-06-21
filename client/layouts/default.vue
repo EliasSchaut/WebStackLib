@@ -1,7 +1,7 @@
 <template>
   <LayoutNav />
   <Alert />
-  <div class="bg-gray-100 dark:bg-gray-200">
+  <div class="bg-gray-100 dark:bg-gray-900">
     <slot />
   </div>
   <LayoutFooter />

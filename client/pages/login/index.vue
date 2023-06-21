@@ -3,89 +3,22 @@
     class="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8"
   >
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
-      <img
-        class="mx-auto h-10 w-auto"
-        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-        alt="Your Company"
-      />
+      <IconCompany class="h-10" />
       <h2
-        class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
+        class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white"
       >
-        Sign in to your account
+        {{ $t('login.title') }}
       </h2>
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-      <div class="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+      <div
+        class="bg-white px-6 py-12 shadow dark:bg-gray-800 sm:rounded-lg sm:px-12"
+      >
         <form class="space-y-6" @submit.prevent="submit_login">
-          <div>
-            <label
-              for="email"
-              class="block text-sm font-medium leading-6 text-gray-900"
-              >E-Mail address</label
-            >
-            <div class="relative mt-2 rounded-md shadow-sm">
-              <div
-                class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
-              >
-                <EnvelopeIcon
-                  class="h-5 w-5 text-gray-400"
-                  aria-hidden="true"
-                />
-              </div>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autocomplete="email"
-                required
-                class="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="you@example.com"
-              />
-            </div>
-          </div>
-
-          <div>
-            <div class="flex items-center justify-between">
-              <label
-                for="password"
-                class="block text-sm font-medium leading-6 text-gray-900"
-                >Password</label
-              >
-              <div class="text-sm">
-                <a
-                  href="#"
-                  class="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >Forgot password?</a
-                >
-              </div>
-            </div>
-            <div class="relative mt-2 rounded-md shadow-sm">
-              <div
-                class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
-              >
-                <KeyIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-              </div>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autocomplete="current-password"
-                required=""
-                class="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="•••"
-              />
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Sign in
-            </button>
-          </div>
+          <FormInputEmail id="email" required />
+          <FormInputPassword id="password" required />
+          <FormSubmit :label="$t('login.submit')" />
         </form>
 
         <div>
@@ -96,7 +29,10 @@
             <div
               class="relative flex justify-center text-sm font-medium leading-6"
             >
-              <span class="bg-white px-6 text-gray-900">Or continue with</span>
+              <span
+                class="bg-white px-6 text-gray-900 dark:bg-gray-800 dark:text-white"
+                >{{ $t('login.oauth') }}</span
+              >
             </div>
           </div>
 
@@ -105,16 +41,7 @@
               href="#"
               class="flex w-full items-center justify-center gap-3 rounded-md bg-[#4285F4] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
             >
-              <svg
-                class="h-5 w-5"
-                aria-hidden="true"
-                fill="currentColor"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"
-                />
-              </svg>
+              <IconGoogle class="h-5 w-5" />
               <span class="text-sm font-semibold leading-6">Google</span>
             </a>
 
@@ -122,30 +49,19 @@
               href="#"
               class="flex w-full items-center justify-center gap-3 rounded-md bg-[#24292F] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#24292F]"
             >
-              <svg
-                class="h-5 w-5"
-                aria-hidden="true"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z"
-                  clip-rule="evenodd"
-                />
-              </svg>
+              <IconGithub class="h-5 w-5" />
               <span class="text-sm font-semibold leading-6">GitHub</span>
             </a>
           </div>
         </div>
       </div>
 
-      <p class="mt-10 text-center text-sm text-gray-500">
-        No account?
+      <p class="mt-10 text-center text-sm text-gray-500 dark:text-gray-400">
+        {{ $t('login.no_account') }}
         <NuxtLink
           to="sign_up"
-          class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-          >Sign Up Now</NuxtLink
+          class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
+          >{{ $t('login.sign_up') }}</NuxtLink
         >
       </p>
     </div>
@@ -157,10 +73,12 @@ import { EnvelopeIcon, KeyIcon } from '@heroicons/vue/20/solid';
 import { defineComponent } from 'vue';
 import { authStore } from '@/store/auth';
 import { alertStore } from '@/store/alert';
+import FormInputEmail from '~/components/form/input/password.vue';
 
 export default defineComponent({
   name: 'index',
   components: {
+    FormInputEmail,
     EnvelopeIcon,
     KeyIcon,
   },
