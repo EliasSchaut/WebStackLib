@@ -20,14 +20,19 @@ model Server {
 }
 
 model User {
-  id        Int     @id @default(autoincrement())
-  server_id Int
-  server    Server  @relation(fields: [server_id], references: [id], onDelete: Cascade)
-  username  String  @unique
-  password  String
-  name      String
-  is_admin  Boolean @default(false)
-  verified  Boolean @default(false)
-  pw_reset  Boolean @default(false)
-  challenge String  @unique @default(cuid())
+  id             Int     @id @default(autoincrement())
+  server_id      Int
+  server         Server  @relation(fields: [server_id], references: [id], onDelete: Cascade)
+  email          String  @unique
+  username       String  @unique
+  password       String
+  first_name     String
+  last_name      String
+  avatar         String?
+  profile_public Boolean @default(false)
+  email_opt_in   Boolean @default(false)
+  is_admin       Boolean @default(false)
+  verified       Boolean @default(false)
+  pw_reset       Boolean @default(false)
+  challenge      String  @unique @default(cuid())
 }

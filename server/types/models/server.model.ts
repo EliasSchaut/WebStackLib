@@ -18,5 +18,5 @@ export class ServerModel {
   name!: string;
 
   @Field(() => String, { nullable: true })
-  desc?: string;
+  desc!: string;
 }

@@ -6,16 +6,28 @@
         class="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
         >{{ label }}</label
       >
-      <div v-if="side_link !== null" class="text-sm">
+      <div v-if="side_label !== null" class="text-sm">
         <NuxtLink
-          :to="side_link.href"
+          v-if="side_label.href != null"
+          :to="side_label.href"
           class="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
-          >{{ side_link.label }}</NuxtLink
+          >{{ side_label.label }}</NuxtLink
         >
+        <span v-else class="leading-6 text-gray-500 dark:text-gray-400">
+          {{ side_label.label }}
+        </span>
       </div>
     </div>
-    <div class="relative mt-2 rounded-md shadow-sm">
+    <div
+      :class="[
+        inside_label != null
+          ? 'flex ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:bg-white/5 dark:ring-white/10 dark:focus:ring-indigo-500'
+          : '',
+        'relative mt-2 rounded-md shadow-sm',
+      ]"
+    >
       <div
+        v-if="icon != null"
         class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
       >
         <component
@@ -24,14 +36,26 @@
           aria-hidden="true"
         />
       </div>
+      <span
+        v-if="inside_label != null"
+        class="flex select-none items-center pl-3 text-gray-500 dark:text-gray-300 sm:text-sm"
+        >{{ inside_label }}</span
+      >
       <input
         :id="id"
         :name="id"
         :type="type"
         :autocomplete="type"
         :required="required"
-        class="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:bg-white/5 dark:text-white dark:ring-white/10 dark:focus:ring-indigo-500 sm:text-sm sm:leading-6"
-        :placeholder="placeholder"
+        :class="[
+          icon != null ? 'pl-10' : '',
+          inside_label != null
+            ? 'flex-1 bg-transparent pl-1 focus:ring-0'
+            : 'w-full ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:bg-white/5 dark:ring-white/10 dark:focus:ring-indigo-500',
+          'block rounded-md border-0 py-1.5 text-gray-900 placeholder:text-gray-400 dark:text-white sm:text-sm sm:leading-6',
+        ]"
+        :placeholder="placeholder != null ? placeholder : ''"
+        :pattern="pattern != null ? pattern : ''"
       />
     </div>
   </div>
@@ -50,7 +74,7 @@ export default defineComponent({
       required: true,
     },
     type: {
-      type: String as () => 'email' | 'password',
+      type: String,
       required: true,
     },
     label: {
@@ -59,18 +83,26 @@ export default defineComponent({
     },
     placeholder: {
       type: String,
-      required: true,
+      default: null,
     },
     icon: {
       type: Function,
-      required: true,
+      default: null,
     },
     required: {
       type: Boolean,
       default: false,
     },
-    side_link: {
-      type: Object as PropType<{ label: string; href: string }>,
+    side_label: {
+      type: Object as PropType<{ label: string; href: string | null }>,
+      default: null,
+    },
+    inside_label: {
+      type: String,
+      default: null,
+    },
+    pattern: {
+      type: String,
       default: null,
     },
   },

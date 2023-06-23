@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 import get_http_adapter_instance from './.nest/nest.js';
+const proj_name = process.env.PROJECT_NAME;
 const is_dev = process.env.NODE_ENV === 'development';
 const frontend_url = `${process.env.PROTOCOL}://${process.env.HOST}:${process.env.PORT}/`;
 const backend_url = is_dev
@@ -14,6 +15,11 @@ export default async () => {
     alias: {
       '@/prisma/*': './prisma/*',
     },
+    app: {
+      head: {
+        title: proj_name,
+      },
+    },
     devtools: { enabled: true },
     workspaceDir: '.',
     srcDir: 'client/',
@@ -22,6 +28,7 @@ export default async () => {
       '@nuxtjs/apollo',
       '@nuxtjs/tailwindcss',
       '@nuxtjs/color-mode',
+      '@kevinmarrec/nuxt-pwa',
       'dayjs-nuxt',
       '@pinia/nuxt',
       '@pinia-plugin-persistedstate/nuxt',

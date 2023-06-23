@@ -21,13 +21,13 @@ export class AuthService {
   ) {}
 
   async sign_in(
-    username: string,
+    email: string,
     password: string,
     ctx: CtxType,
   ): Promise<AuthModel> {
     const user = await this.prisma.user.findUnique({
       select: { id: true, password: true, verified: true, is_admin: true },
-      where: { username: username },
+      where: { email: email },
     });
 
     if (user === null) {
@@ -65,13 +65,6 @@ export class AuthService {
     );
     return this.prisma.user
       .create({
-        select: {
-          id: true,
-          username: true,
-          name: true,
-          verified: true,
-          challenge: true,
-        },
         data: {
           ...user_input_data,
           server_id: ctx.server_id,
@@ -79,8 +72,8 @@ export class AuthService {
       })
       .then(({ challenge, ...user }: UserModel) => {
         this.emailService.send_verify(
+          user.email,
           user.username,
-          user.name,
           this.emailService.generate_verify_url(challenge as string),
         );
         return user;

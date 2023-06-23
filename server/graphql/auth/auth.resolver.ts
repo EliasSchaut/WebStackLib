@@ -14,12 +14,12 @@ export class AuthResolver {
 
   @Query(() => AuthModel, { name: 'auth_sign_in' })
   async sign_in(
-    @Args('username') username: string,
+    @Args('email') email: string,
     @Args('password') password: string,
     @ServerID() server_id: number,
     @I18n() i18n: I18nContext<I18nTranslations>,
   ): Promise<AuthModel> {
-    return await this.authService.sign_in(username, password, {
+    return await this.authService.sign_in(email, password, {
       server_id,
       i18n,
     });

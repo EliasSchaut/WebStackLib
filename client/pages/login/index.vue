@@ -17,7 +17,7 @@
       >
         <form class="space-y-6" @submit.prevent="submit_login">
           <FormInputEmail id="email" required />
-          <FormInputPassword id="password" required />
+          <FormInputPassword id="password" show_forgot_password required />
           <FormSubmit :label="$t('login.submit')" />
         </form>
 
@@ -73,12 +73,10 @@ import { EnvelopeIcon, KeyIcon } from '@heroicons/vue/20/solid';
 import { defineComponent } from 'vue';
 import { authStore } from '@/store/auth';
 import { alertStore } from '@/store/alert';
-import FormInputEmail from '~/components/form/input/password.vue';
 
 export default defineComponent({
-  name: 'index',
+  name: 'Login',
   components: {
-    FormInputEmail,
     EnvelopeIcon,
     KeyIcon,
   },

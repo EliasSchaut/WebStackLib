@@ -19,13 +19,13 @@ export class EmailService {
     } as TransportOptions);
   }
 
-  async send_verify(dest_mail: string, user_name: string, verify_url: string) {
+  async send_verify(dest_mail: string, username: string, verify_url: string) {
     await this.transporter.sendMail({
       from: `"${this.project_name}" <noreply@schaut.dev>`,
       to: dest_mail,
       subject: `[${this.project_name}] Confirm your email!`,
       text:
-        `Hello ${user_name},\n\nplease confirm your email by clicking the following link:\n${verify_url}\n\n` +
+        `Hello ${username},\n\nplease confirm your email by clicking the following link:\n${verify_url}\n\n` +
         `Dear\n${this.project_name} Team\n`,
     });
   }
