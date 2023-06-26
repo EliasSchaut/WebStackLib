@@ -5,21 +5,18 @@
     :label="label"
     :placeholder="placeholder"
     :required="required"
-    :pattern="name_pattern"
+    pattern="^[A-ZÖÄÜ][A-Za-zÖÄÜöäüß ]*$"
+    :minlength="2"
+    :maxlength="20"
+    invalid_pattern_feedback="Der Name muss mit einem Großbuchstaben beginnen und muss ein gültiger Name sein."
   />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { NamePattern } from '@@/server/common/validation/patterns/name.pattern';
 
 export default defineComponent({
   name: 'FormInputEmail',
-  data() {
-    return {
-      name_pattern: String(NamePattern),
-    };
-  },
   props: {
     id: {
       type: String,

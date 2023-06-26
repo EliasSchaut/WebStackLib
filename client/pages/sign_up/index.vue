@@ -15,12 +15,21 @@
       <div
         class="bg-white px-6 py-12 shadow dark:bg-gray-800 sm:rounded-lg sm:px-12"
       >
-        <form
+        <Form
           class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"
-          @submit.prevent="submit_set_up"
+          :submit="submit_set_up"
         >
           <FormInputUsername class="sm:col-span-4" id="username" required />
-          <FormAvatar class="sm:col-span-2" />
+          <FormAvatar id="avatar" label="Avatar" class="sm:col-span-2" />
+          <FormInputArea
+            id="about"
+            class="sm:col-span-6"
+            label="About"
+            :side_label="{ label: 'Optional', href: null }"
+            placeholder="Write a few sentences about yourself."
+            :minlength="20"
+            :maxlength="1500"
+          />
           <FormInputName
             class="sm:col-span-3"
             id="first_name"
@@ -36,11 +45,28 @@
             required
           />
           <FormInputEmail class="sm:col-span-6" id="email" required />
-          <FormInputPassword class="sm:col-span-3" id="password" required />
           <FormInputPassword
+            @pw_input="
+              (new_pw_value) => {
+                pw_value = new_pw_value;
+                check_pw();
+              }
+            "
+            class="sm:col-span-3"
+            id="password"
+            required
+          />
+          <FormInputPassword
+            @pw_input="
+              (new_pw_confirm_value) => {
+                pw_confirm_value = new_pw_confirm_value;
+                check_pw();
+              }
+            "
             class="sm:col-span-3"
             id="password_confirm"
             label="Confirm Password"
+            :pw_confirmed="pw_confirmed"
             required
           />
           <div class="space-y-5 sm:col-span-6">
@@ -62,7 +88,7 @@
             />
           </div>
           <FormSubmit class="sm:col-span-6" label="Registrieren" />
-        </form>
+        </Form>
 
         <div>
           <div class="relative mt-10">
@@ -127,13 +153,16 @@ export default defineComponent({
     return {
       auth: authStore(),
       alert: alertStore(),
+      pw_value: ref<string>(''),
+      pw_confirm_value: ref<string>(''),
+      pw_confirmed: ref<boolean>(false),
     };
   },
   methods: {
-    submit_set_up(e: Event) {
-      const form = e.target as HTMLFormElement;
-      const formData = new FormData(form);
-
+    check_pw() {
+      this.pw_confirmed = this.pw_value === this.pw_confirm_value;
+    },
+    submit_set_up(e: Event, form_data: FormData) {
       const query = gql`
         query login($email: String!, $password: String!) {
           auth_sign_in(username: $email, password: $password) {
@@ -144,8 +173,8 @@ export default defineComponent({
       `;
 
       const { result } = useQuery(query, {
-        email: formData.get('email'),
-        password: formData.get('password'),
+        email: form_data.get('email'),
+        password: form_data.get('password'),
       });
 
       console.log(result.value);

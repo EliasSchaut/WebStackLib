@@ -1,12 +1,20 @@
 <template>
   <FormInput
+    ref="pw_input_child"
+    @input="(e: Event) => $emit('pw_input', (e.target as HTMLInputElement).value)"
     :id="id"
     type="password"
     :label="label != null ? label : $t('common.form.password')"
     placeholder="•••"
     :required="required"
     :icon="KeyIcon"
-    :pattern="password_pattern"
+    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).*$"
+    :minlength="8"
+    :maxlength="200"
+    :invalid_pattern_feedback="
+      pw_confirmed ? invalid_pw_feedback : invalid_pw_confirmed_feedback
+    "
+    :force_invalid_feedback="!pw_confirmed"
     :side_label="
       show_forgot_password
         ? {
@@ -21,16 +29,20 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { KeyIcon } from '@heroicons/vue/20/solid';
-import { PasswordPattern } from '@@/server/common/validation/patterns/password.pattern';
 
 export default defineComponent({
   name: 'FormInputPassword',
-  setup() {
+  data() {
     return {
-      password_pattern: PasswordPattern,
+      invalid_pw_feedback:
+        'Das Passwort muss mindestens einen Großbuchstaben, einen Kleinbuchstaben und eine Zahl enthalten.',
+      invalid_pw_confirmed_feedback: 'Die Passwörter stimmen nicht überein.',
+      pw_pattern: '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).*$',
     };
   },
-  methods: { KeyIcon },
+  methods: {
+    KeyIcon,
+  },
   props: {
     id: {
       type: String,
@@ -48,6 +60,13 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    pw_confirmed: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  emits: {
+    pw_input: (pw: string) => true,
   },
 });
 </script>

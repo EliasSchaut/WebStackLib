@@ -5,22 +5,19 @@
     label="Username"
     placeholder="max_mustermann"
     :required="required"
-    :pattern="username_pattern"
+    pattern="^[a-z]+(_[a-z]+)*$"
     inside_label="/profile/"
+    :minlength="2"
+    :maxlength="20"
+    invalid_pattern_feedback="Verwende nur englische Kleinbuchstaben und Unterstriche. Der Benutzername muss zudem mit einem Kleinbuchstaben beginnen."
   />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { UsernamePattern } from '@@/server/common/validation/patterns/username.pattern';
 
 export default defineComponent({
   name: 'FormInputEmail',
-  data() {
-    return {
-      username_pattern: String(UsernamePattern),
-    };
-  },
   props: {
     id: {
       type: String,

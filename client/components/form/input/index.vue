@@ -42,10 +42,13 @@
         >{{ inside_label }}</span
       >
       <input
+        @input="(e: Event) => { set_invalid_pattern_feedback();$emit('input', e) }"
         :id="id"
         :name="id"
         :type="type"
         :autocomplete="type"
+        :minlength="minlength"
+        :maxlength="maxlength"
         :required="required"
         :class="[
           icon != null ? 'pl-10' : '',
@@ -68,6 +71,20 @@ import { EnvelopeIcon } from '@heroicons/vue/20/solid';
 export default defineComponent({
   name: 'FormInput',
   components: { EnvelopeIcon },
+  methods: {
+    set_invalid_pattern_feedback() {
+      const input = document.getElementById(this.id) as HTMLInputElement;
+      if (this.force_invalid_feedback || input.validity.patternMismatch) {
+        input.setCustomValidity(this.invalid_pattern_feedback);
+      } else input.setCustomValidity('');
+    },
+  },
+  created() {
+    watch(
+      () => this.force_invalid_feedback,
+      () => this.set_invalid_pattern_feedback(),
+    );
+  },
   props: {
     id: {
       type: String,
@@ -103,8 +120,27 @@ export default defineComponent({
     },
     pattern: {
       type: String,
+      default: '.*',
+    },
+    invalid_pattern_feedback: {
+      type: String,
       default: null,
     },
+    minlength: {
+      type: Number,
+      default: 0,
+    },
+    maxlength: {
+      type: Number,
+      default: 10000,
+    },
+    force_invalid_feedback: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  emits: {
+    input: (e: Event) => true,
   },
 });
 </script>
