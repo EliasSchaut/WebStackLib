@@ -5,5 +5,9 @@ import { IsName } from '@/common/validation/decorators/IsName.validation';
 export class UserUpdateInputModel {
   @IsName()
   @Field(() => String, { nullable: true })
-  name?: string;
+  first_name?: string;
+
+  @IsName()
+  @Field(() => String, { nullable: true })
+  last_name?: string;
 }

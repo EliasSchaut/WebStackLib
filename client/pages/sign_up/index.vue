@@ -22,12 +22,12 @@
           <FormInputUsername class="sm:col-span-4" id="username" required />
           <FormAvatar id="avatar" label="Avatar" class="sm:col-span-2" />
           <FormInputArea
-            id="about"
+            id="bio"
             class="sm:col-span-6"
-            label="About"
+            label="About You"
             :side_label="{ label: 'Optional', href: null }"
             placeholder="Write a few sentences about yourself."
-            :minlength="20"
+            :minlength="1"
             :maxlength="1500"
           />
           <FormInputName
@@ -130,8 +130,8 @@
         <NuxtLink
           to="login"
           class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
-          >Melde dich an</NuxtLink
-        >
+          >Melde dich an
+        </NuxtLink>
       </p>
     </div>
   </div>
@@ -142,6 +142,7 @@ import { EnvelopeIcon, KeyIcon } from '@heroicons/vue/20/solid';
 import { defineComponent } from 'vue';
 import { authStore } from '@/store/auth';
 import { alertStore } from '@/store/alert';
+import { GraphQLError } from 'graphql/error';
 
 export default defineComponent({
   name: 'Sign_Up',
@@ -150,12 +151,22 @@ export default defineComponent({
     KeyIcon,
   },
   setup() {
+    const query_mutate_user = gql`
+      mutation register($user_input_data: UserInputModel!) {
+        auth_register(user_input_data: $user_input_data) {
+          id
+        }
+      }
+    `;
+    const { mutate: mutate_user } = useMutation(query_mutate_user);
+
     return {
       auth: authStore(),
       alert: alertStore(),
       pw_value: ref<string>(''),
       pw_confirm_value: ref<string>(''),
       pw_confirmed: ref<boolean>(false),
+      mutate_user,
     };
   },
   methods: {
@@ -163,30 +174,30 @@ export default defineComponent({
       this.pw_confirmed = this.pw_value === this.pw_confirm_value;
     },
     submit_set_up(e: Event, form_data: FormData) {
-      const query = gql`
-        query login($email: String!, $password: String!) {
-          auth_sign_in(username: $email, password: $password) {
-            barrier_token
-            is_admin
-          }
-        }
-      `;
+      const variables = {
+        user_input_data: {
+          username: form_data.get('username'),
+          email: form_data.get('email'),
+          password: form_data.get('password'),
+          first_name: form_data.get('first_name'),
+          last_name: form_data.get('last_name'),
+          bio: form_data.get('bio') !== '' ? form_data.get('bio') : null,
+          avatar: null,
+          profile_public: form_data.get('profile_public') === 'on',
+          email_opt_in: form_data.get('email_opt_in') === 'on',
+        },
+      };
 
-      const { result } = useQuery(query, {
-        email: form_data.get('email'),
-        password: form_data.get('password'),
-      });
+      console.log('vars', variables);
 
-      console.log(result.value);
-
-      if (result.value) {
-        this.auth.login(
-          result.value.auth_sign_in.barrier_token,
-          result.value.auth_sign_in.is_admin,
-        );
-      } else {
-        this.alert.show('Invalid credentials', 'warning');
-      }
+      this.mutate_user({ ...variables })
+        .then((result) => {
+          console.log('mutres', result?.data);
+          console.log('mutex', result?.extensions);
+        })
+        .catch((e: GraphQLError) => {
+          console.error(e);
+        });
     },
   },
 });

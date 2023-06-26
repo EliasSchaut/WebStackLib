@@ -39,7 +39,13 @@ export class UserModel {
       'Link to profile picture of user. Only public if profile is public',
     nullable: true,
   })
-  avatar!: string;
+  avatar?: string;
+
+  @Field(() => String, {
+    description: 'Short bio of user. Only public if profile is public',
+    nullable: true,
+  })
+  bio?: string;
 
   @Field(() => Boolean, {
     description: 'Indicates whether the user wants their profile to be public',

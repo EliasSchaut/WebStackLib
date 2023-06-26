@@ -63,6 +63,7 @@ export class AuthService {
     user_input_data.password = await this.passwordService.hash(
       user_input_data.password,
     );
+    console.log(user_input_data);
     return this.prisma.user
       .create({
         data: {
@@ -70,13 +71,14 @@ export class AuthService {
           server_id: ctx.server_id,
         },
       })
-      .then(({ challenge, ...user }: UserModel) => {
+      .then((user) => {
         this.emailService.send_verify(
           user.email,
           user.username,
-          this.emailService.generate_verify_url(challenge as string),
+          this.emailService.generate_verify_url(user.challenge as string),
         );
-        return user;
+        user.challenge = '';
+        return user as UserModel;
       })
       .catch((e: PrismaClientKnownRequestError) => {
         if (e.code === 'P2002') {
@@ -103,12 +105,12 @@ export class AuthService {
       });
     }
 
-    return this.prisma.user.update({
+    return (await this.prisma.user.update({
       where: { id: user.id },
       data: {
         verified: true,
       },
-    });
+    })) as UserModel;
   }
 
   async reset_password(
@@ -127,7 +129,7 @@ export class AuthService {
       );
     }
 
-    return this.prisma.user.update({
+    return (await this.prisma.user.update({
       where: { id: user.id },
       data: {
         password: await this.passwordService.hash(
@@ -135,7 +137,7 @@ export class AuthService {
         ),
         pw_reset: false,
       },
-    });
+    })) as UserModel;
   }
 
   async reset_password_request(
@@ -160,8 +162,8 @@ export class AuthService {
 
     const pw_reset_url = this.emailService.generate_pw_reset_url(challenge);
     await this.emailService.send_password_reset(
-      user.username,
-      user.name,
+      user.email,
+      user.first_name + ' ' + user.last_name,
       pw_reset_url,
     );
     return true;
