@@ -24,8 +24,6 @@ export default defineNuxtPlugin(({ hook }) => {
   });
 
   defaultClient.setLink(from([alertLink, defaultClient.link]));
-
-  // For using useQuery in @vue/apollo-composable
   provideApolloClient(defaultClient);
 
   hook('apollo:error', (error) => {

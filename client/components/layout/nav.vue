@@ -241,10 +241,6 @@ export default defineComponent({
           name: 'Home',
           href: '/',
         },
-        {
-          name: '???',
-          href: '/login',
-        },
       ] as Array<{ name: string; href: string }>,
     };
   },
