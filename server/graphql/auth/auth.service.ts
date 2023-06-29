@@ -31,29 +31,31 @@ export class AuthService {
     });
 
     if (user === null) {
-      throw new GraphQLError(ctx.i18n.t('auth.exception.forbidden_login'), {
-        extensions: { code: 'WARNING' },
-      });
+      return {
+        code: 'warn',
+        response: ctx.i18n.t('auth.exception.forbidden_login'),
+      } as AuthModel;
     }
     if (!(await this.passwordService.compare(password, user.password))) {
-      throw new GraphQLError(ctx.i18n.t('auth.exception.forbidden_login'), {
-        extensions: { code: 'WARNING' },
-      });
+      return {
+        code: 'warn',
+        response: ctx.i18n.t('auth.exception.forbidden_login'),
+      } as AuthModel;
     }
     if (!user.verified) {
-      throw new GraphQLError(
-        ctx.i18n.t('auth.exception.forbidden_not_verified'),
-        {
-          extensions: { code: 'WARNING' },
-        },
-      );
+      return {
+        code: 'warn',
+        response: ctx.i18n.t('auth.exception.forbidden_not_verified'),
+      } as AuthModel;
     }
 
     const payload = { username: user.id, sub: null };
     return {
       barrier_token: await this.jwtService.signAsync(payload),
       is_admin: user.is_admin,
-    };
+      success: true,
+      code: 'success',
+    } as AuthModel;
   }
 
   async register(
@@ -63,7 +65,6 @@ export class AuthService {
     user_input_data.password = await this.passwordService.hash(
       user_input_data.password,
     );
-    console.log(user_input_data);
     return this.prisma.user
       .create({
         data: {
@@ -78,20 +79,25 @@ export class AuthService {
           this.emailService.generate_verify_url(user.challenge as string),
         );
         user.challenge = '';
-        return user as UserModel;
+        return {
+          ...user,
+          success: true,
+          code: 'success',
+          response: ctx.i18n.t('auth.success.register'),
+        } as UserModel;
       })
       .catch((e: PrismaClientKnownRequestError) => {
         if (e.code === 'P2002') {
-          throw new GraphQLError(
-            ctx.i18n.t('user.exception.conflict_username'),
-            {
-              extensions: { code: 'WARNING' },
-            },
-          );
+          return {
+            code: 'warn',
+            response: ctx.i18n.t('user.exception.conflict_username'),
+          } as UserModel;
+        } else {
+          return {
+            code: 'danger',
+            response: ctx.i18n.t('user.exception.create'),
+          } as UserModel;
         }
-        throw new GraphQLError(ctx.i18n.t('user.exception.create'), {
-          extensions: { code: 'DANGER' },
-        });
       });
   }
 

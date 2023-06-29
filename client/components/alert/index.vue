@@ -2,7 +2,7 @@
   <div v-if="alert.visible">
     <AlertDanger v-if="alert.type === 'danger'" />
     <AlertSuccess v-if="alert.type === 'success'" />
-    <AlertWarning v-if="alert.type === 'warning'" />
+    <AlertWarn v-if="alert.type === 'warn'" />
     <AlertInfo v-if="alert.type === 'info'" />
   </div>
 </template>

@@ -154,7 +154,9 @@ export default defineComponent({
     const query_mutate_user = gql`
       mutation register($user_input_data: UserInputModel!) {
         auth_register(user_input_data: $user_input_data) {
-          id
+          success
+          response
+          code
         }
       }
     `;
@@ -188,12 +190,15 @@ export default defineComponent({
         },
       };
 
-      console.log('vars', variables);
-
       this.mutate_user({ ...variables })
         .then((result) => {
-          console.log('mutres', result?.data);
-          console.log('mutex', result?.extensions);
+          console.log(result);
+          if (result?.data.success) {
+            this.$router.push({ name: 'login' });
+          } else {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+          }
         })
         .catch((e: GraphQLError) => {
           console.error(e);

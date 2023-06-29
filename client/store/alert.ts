@@ -22,5 +22,5 @@ export const alertStore = defineStore('alert', {
 class AlertType {
   visible!: boolean;
   msg!: string;
-  type!: 'info' | 'danger' | 'warning' | 'success';
+  type!: 'info' | 'danger' | 'warn' | 'success';
 }

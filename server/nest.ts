@@ -21,7 +21,6 @@ export async function createApp(): Promise<INestApplication> {
     }),
   );
   app.useGlobalPipes(new ValidationPipe());
-  if (process.env.NODE_ENV !== 'production') app.enableCors();
   return app;
 }
 

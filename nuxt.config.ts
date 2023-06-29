@@ -39,12 +39,13 @@ export default async () => {
 
     apollo: {
       autoImports: true,
-      authType: 'Bearer',
-      authHeader: 'Authorization',
-      tokenStorage: 'cookie',
       proxyCookies: true,
       clients: {
         default: {
+          tokenName: 'token',
+          tokenStorage: 'cookie',
+          authType: 'Bearer',
+          authHeader: 'Authorization',
           httpEndpoint: `${backend_url}graphql`,
         },
       },
